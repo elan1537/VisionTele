@@ -1,0 +1,278 @@
+{
+  "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE" : {
+    "objectMetadataList" : [
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5",
+        "Geom",
+        "R1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+        "Robot",
+        "UR5",
+        "Geom"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "E74473FD-2F40-4316-AC24-E5003C1B63A9" : {
+    "objectMetadataList" : [
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "R1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "Robot",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "tcp_axis",
+        "Geom"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "Geom",
+        "R1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "Robot",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "tcp_axis",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "Geom",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "Root",
+        "R1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "R2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "R3"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+        "UR5",
+        "Geom"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  }
+}

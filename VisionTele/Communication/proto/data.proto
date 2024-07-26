@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package frametracking;
+
+message Matrix4x4 {
+    float m00 = 1;
+    float m01 = 2;
+    float m02 = 3;
+    float m03 = 4;
+    float m10 = 5;
+    float m11 = 6;
+    float m12 = 7;
+    float m13 = 8;
+    float m20 = 9;
+    float m21 = 10;
+    float m22 = 11;
+    float m23 = 12;
+    float m30 = 13;
+    float m31 = 14;
+    float m32 = 15;
+    float m33 = 16;
+}
+
+message Matrix3x3 {
+    float m00 = 1;
+    float m01 = 2;
+    float m02 = 3;
+    float m10 = 4;
+    float m11 = 5;
+    float m12 = 6;
+    float m20 = 7;
+    float m21 = 8;
+    float m22 = 9;
+}
+
+message FrameUpdate {
+    Matrix4x4 Head = 1;
+    Matrix4x4 Extrinsic = 2;
+    Matrix3x3 Intrinsic = 3;
+    double captureTime = 4;
+    int32 midExposureTimestamp = 5;
+    int32 colorTemperature = 6;
+    double exposureDuration = 7;
+    string cameraType = 8;
+    string cameraPosition = 9;
+    bytes image = 10;
+}
+
+service FrameTrackingService {
+    rpc streamFrameUpdates(FrameUpdate) returns (stream FrameUpdate) {}
+}
+
+message FrameUpdateAck {
+    string message = 1;
+}

@@ -1,0 +1,14 @@
+{
+  "pathsToIds" : {
+    "..\/..\/RobotTelekinesis\/Packages\/URRobots\/Sources\/URRobots\/URRobots.rkassets\/UR5.usda" : "AE5410C2-4A05-481E-9CBA-CF1443626C37",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/R1.usdz" : "80A8A4AB-CF75-4272-8161-EDB0E0AE4E60",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/R2.usdz" : "066A65AE-7030-4778-9DA5-72A31669C44E",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/R3.usdz" : "C657F326-A6FF-4311-9EF1-81E9FE3B7ACF",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/R4.usdz" : "88B1A4AC-0F81-46FC-B563-FD12BD0D5D65",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/R6.usdz" : "8D542DEE-DE1A-442E-A4E1-D797A9A6BE7D",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/Robot.usda" : "3B2374AC-F3FA-4E0D-9FFF-C0492826CFEE",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/Scene.usda" : "D5311210-EAA3-4FD5-BB64-7FBAA22A767E",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/UR5.usda" : "E74473FD-2F40-4316-AC24-E5003C1B63A9",
+    "URRobots\/Sources\/URRobots\/URRobots.rkassets\/UR5.usdz" : "2F067FBC-2A40-4042-87F3-5E98EC574747"
+  }
+}
