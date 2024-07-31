@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB7772DB2C535EEC0044EE9F /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = AB7772DA2C535EEC0044EE9F /* RealityKitContent */; };
 		AB7773502C536C1D0044EE9F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AB77734F2C536C1D0044EE9F /* .gitignore */; };
+		AB7986FE2C573D300092539F /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = AB7986FD2C573D300092539F /* CGRPCZlib */; };
+		AB7987002C573D300092539F /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = AB7986FF2C573D300092539F /* GRPC */; };
+		AB7987022C573D300092539F /* GRPCReflectionService in Frameworks */ = {isa = PBXBuildFile; productRef = AB7987012C573D300092539F /* GRPCReflectionService */; };
+		AB7987042C573D300092539F /* _GRPCCore in Frameworks */ = {isa = PBXBuildFile; productRef = AB7987032C573D300092539F /* _GRPCCore */; };
+		AB7987062C573D300092539F /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = AB7987052C573D300092539F /* protoc-gen-grpc-swift */; };
+		AB7987092C573D590092539F /* URRobots in Frameworks */ = {isa = PBXBuildFile; productRef = AB7987082C573D590092539F /* URRobots */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		AB7772D52C535EEC0044EE9F /* VisionTele.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTele.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB7772D92C535EEC0044EE9F /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		AB7772EA2C535EED0044EE9F /* VisionTeleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisionTeleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB77734F2C536C1D0044EE9F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,7 +52,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB7772DB2C535EEC0044EE9F /* RealityKitContent in Frameworks */,
+				AB7987022C573D300092539F /* GRPCReflectionService in Frameworks */,
+				AB7987042C573D300092539F /* _GRPCCore in Frameworks */,
+				AB7987092C573D590092539F /* URRobots in Frameworks */,
+				AB7987002C573D300092539F /* GRPC in Frameworks */,
+				AB7986FE2C573D300092539F /* CGRPCZlib in Frameworks */,
+				AB7987062C573D300092539F /* protoc-gen-grpc-swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,9 +76,9 @@
 			children = (
 				AB77734F2C536C1D0044EE9F /* .gitignore */,
 				AB7772D72C535EEC0044EE9F /* VisionTele */,
-				AB7772D82C535EEC0044EE9F /* Packages */,
 				AB7772ED2C535EED0044EE9F /* VisionTeleTests */,
 				AB7772D62C535EEC0044EE9F /* Products */,
+				AB7986FB2C573D070092539F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,12 +91,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AB7772D82C535EEC0044EE9F /* Packages */ = {
+		AB7986FB2C573D070092539F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AB7772D92C535EEC0044EE9F /* RealityKitContent */,
 			);
-			path = Packages;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,7 +118,12 @@
 			);
 			name = VisionTele;
 			packageProductDependencies = (
-				AB7772DA2C535EEC0044EE9F /* RealityKitContent */,
+				AB7986FD2C573D300092539F /* CGRPCZlib */,
+				AB7986FF2C573D300092539F /* GRPC */,
+				AB7987012C573D300092539F /* GRPCReflectionService */,
+				AB7987032C573D300092539F /* _GRPCCore */,
+				AB7987052C573D300092539F /* protoc-gen-grpc-swift */,
+				AB7987082C573D590092539F /* URRobots */,
 			);
 			productName = VisionTele;
 			productReference = AB7772D52C535EEC0044EE9F /* VisionTele.app */;
@@ -167,6 +180,10 @@
 				Base,
 			);
 			mainGroup = AB7772CC2C535EEC0044EE9F;
+			packageReferences = (
+				AB7986FC2C573D300092539F /* XCRemoteSwiftPackageReference "grpc-swift" */,
+				AB7987072C573D590092539F /* XCLocalSwiftPackageReference "VisionTele/URRobots" */,
+			);
 			productRefGroup = AB7772D62C535EEC0044EE9F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -226,6 +243,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VisionTele/VisionTele.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"VisionTele/Preview Content\"";
@@ -252,6 +270,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VisionTele/VisionTele.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"VisionTele/Preview Content\"";
@@ -464,10 +483,53 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		AB7987072C573D590092539F /* XCLocalSwiftPackageReference "VisionTele/URRobots" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = VisionTele/URRobots;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AB7986FC2C573D300092539F /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/grpc/grpc-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.23.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		AB7772DA2C535EEC0044EE9F /* RealityKitContent */ = {
+		AB7986FD2C573D300092539F /* CGRPCZlib */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = RealityKitContent;
+			package = AB7986FC2C573D300092539F /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = CGRPCZlib;
+		};
+		AB7986FF2C573D300092539F /* GRPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB7986FC2C573D300092539F /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = GRPC;
+		};
+		AB7987012C573D300092539F /* GRPCReflectionService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB7986FC2C573D300092539F /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = GRPCReflectionService;
+		};
+		AB7987032C573D300092539F /* _GRPCCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB7986FC2C573D300092539F /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = _GRPCCore;
+		};
+		AB7987052C573D300092539F /* protoc-gen-grpc-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB7986FC2C573D300092539F /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = "protoc-gen-grpc-swift";
+		};
+		AB7987082C573D590092539F /* URRobots */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = URRobots;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
