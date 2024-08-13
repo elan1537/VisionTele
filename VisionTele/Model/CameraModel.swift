@@ -12,12 +12,6 @@ final class CameraModel: ObservableObject {
     private let cameraProvider = CameraFrameProvider()
     private let worldTracking = WorldTrackingProvider()
     private let formats = CameraVideoFormat.supportedVideoFormats(for: .main, cameraPositions: [.left])
-    private let folderName = "captures_test"
-    private var folderURL: URL?
-    
-    init() {
-        self.folderURL = createFolder(folderName: folderName)!
-    }
 
     func run() {
         guard CameraFrameProvider.isSupported else {
@@ -46,32 +40,6 @@ final class CameraModel: ObservableObject {
         Task { startServer() }
     }
     
-    func createFolder(folderName: String) -> URL? {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let folderURL = documentsURL.appendingPathComponent(folderName)
-        
-        if !fileManager.fileExists(atPath: folderURL.path) {
-            do {
-                try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                print("폴더 생성 성공: \(folderURL.path)")
-            } catch {
-                print("폴더 생성 실패: \(error.localizedDescription)")
-                return nil
-            }
-        } else {
-            print("폴더가 이미 존재합니다: \(folderURL.path)")
-            do {
-                try FileManager.default.removeItem(at: folderURL)
-                try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                print("폴더 생성 성공: \(folderURL.path)")
-            } catch {
-                print("Could not cleanup projectFile")
-            }
-        }
-        return folderURL
-    }
-    
     func uiImageFromPixelBuffer(pixelBuffer: CVPixelBuffer) -> UIImage? {
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
         let context = CIContext()
@@ -80,36 +48,6 @@ final class CameraModel: ObservableObject {
 
         }
         return UIImage(cgImage: cgImage)
-    }
-    
-    func saveImageAsJPEG(image: UIImage, fileName: String) {
-        guard let data = image.jpegData(compressionQuality: 1.0) else {
-            print("이미지를 JPEG로 변환 실패")
-            return
-        }
-        
-        let fileURL = self.folderURL!.appendingPathComponent(fileName)
-        
-        do {
-            try data.write(to: fileURL)
-        } catch {
-        }
-    }
-    
-    func savePixelBufferAsImageInFolder(pixelBuffer: CVPixelBuffer, fileName: String) {
-        guard let image = uiImageFromPixelBuffer(pixelBuffer: pixelBuffer) else {
-            print("CVPixelBuffer를 UIImage로 변환 실패")
-            return
-        }
-        
-        saveImageAsJPEG(image: image, fileName: fileName)
-    }
-    
-    
-    func getCurrentTimeString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd_HH-MM-ss.SSSS"
-        return formatter.string(from: Date())
     }
     
     func arrayFromTransform(_ transform: simd_float4x4) -> [[Float]] {
@@ -219,6 +157,16 @@ func fill_frameUpdates() -> Frametracking_FrameUpdate {
     videoUpdate.cameraPosition = DataManager.shared.latestParameters.cameraPosition
     videoUpdate.image = DataManager.shared.latestFrame
     
+    let timestamp = Date().timeIntervalSince1970
+    // Extract the fractional part representing the nanoseconds
+    let fractionalPart = timestamp.truncatingRemainder(dividingBy: 1.0)
+
+    // Convert the fractional part to nanoseconds and then to an integer
+    let nanoseconds = Int(fractionalPart * 1_000_000_000)
+    
+    videoUpdate.seconds = Int64(timestamp)
+    videoUpdate.nanos = Int32(nanoseconds)
+    
     return videoUpdate
     
 }
@@ -226,7 +174,7 @@ func fill_frameUpdates() -> Frametracking_FrameUpdate {
 
 func startServer() {
     DispatchQueue.global().async {
-        let port = 12345
+        let port = 7000
         let host = "0.0.0.0"
         
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 4)
@@ -238,7 +186,6 @@ func startServer() {
         let server = GRPC.Server.insecure(group: group)
             .withServiceProviders([provider])
             .bind(host: host, port: port)
-        
         server.map {
             $0.channel.localAddress
         }.whenSuccess { address in
@@ -248,7 +195,6 @@ func startServer() {
         _ = try! server.flatMap {
             $0.onClose
         }.wait()
-        
     }
 }
 

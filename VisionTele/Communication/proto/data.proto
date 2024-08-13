@@ -44,6 +44,9 @@ message FrameUpdate {
     string cameraType = 8;
     string cameraPosition = 9;
     bytes image = 10;
+    int64 seconds = 11;
+    int32 nanos = 12;
+    
 }
 
 service FrameTrackingService {

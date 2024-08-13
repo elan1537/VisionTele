@@ -7,12 +7,6 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
-//
-//  data.proto
-//  Robot
-//
-//  Created by 박세현 on 7/17/24.
-
 import Foundation
 import SwiftProtobuf
 
@@ -161,6 +155,16 @@ struct Frametracking_FrameUpdate: @unchecked Sendable {
   var image: Data {
     get {return _storage._image}
     set {_uniqueStorage()._image = newValue}
+  }
+
+  var seconds: Int64 {
+    get {return _storage._seconds}
+    set {_uniqueStorage()._seconds = newValue}
+  }
+
+  var nanos: Int32 {
+    get {return _storage._nanos}
+    set {_uniqueStorage()._nanos = newValue}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -401,6 +405,8 @@ extension Frametracking_FrameUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messa
     8: .same(proto: "cameraType"),
     9: .same(proto: "cameraPosition"),
     10: .same(proto: "image"),
+    11: .same(proto: "seconds"),
+    12: .same(proto: "nanos"),
   ]
 
   fileprivate class _StorageClass {
@@ -414,6 +420,8 @@ extension Frametracking_FrameUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _cameraType: String = String()
     var _cameraPosition: String = String()
     var _image: Data = Data()
+    var _seconds: Int64 = 0
+    var _nanos: Int32 = 0
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -438,6 +446,8 @@ extension Frametracking_FrameUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messa
       _cameraType = source._cameraType
       _cameraPosition = source._cameraPosition
       _image = source._image
+      _seconds = source._seconds
+      _nanos = source._nanos
     }
   }
 
@@ -466,6 +476,8 @@ extension Frametracking_FrameUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messa
         case 8: try { try decoder.decodeSingularStringField(value: &_storage._cameraType) }()
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._cameraPosition) }()
         case 10: try { try decoder.decodeSingularBytesField(value: &_storage._image) }()
+        case 11: try { try decoder.decodeSingularInt64Field(value: &_storage._seconds) }()
+        case 12: try { try decoder.decodeSingularInt32Field(value: &_storage._nanos) }()
         default: break
         }
       }
@@ -508,6 +520,12 @@ extension Frametracking_FrameUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messa
       if !_storage._image.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._image, fieldNumber: 10)
       }
+      if _storage._seconds != 0 {
+        try visitor.visitSingularInt64Field(value: _storage._seconds, fieldNumber: 11)
+      }
+      if _storage._nanos != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._nanos, fieldNumber: 12)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -527,6 +545,8 @@ extension Frametracking_FrameUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messa
         if _storage._cameraType != rhs_storage._cameraType {return false}
         if _storage._cameraPosition != rhs_storage._cameraPosition {return false}
         if _storage._image != rhs_storage._image {return false}
+        if _storage._seconds != rhs_storage._seconds {return false}
+        if _storage._nanos != rhs_storage._nanos {return false}
         return true
       }
       if !storagesAreEqual {return false}

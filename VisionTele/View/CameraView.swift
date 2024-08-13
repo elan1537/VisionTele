@@ -2,6 +2,17 @@ import SwiftUI
 import RealityKit
 import CoreImage
 import ARKit
+import Foundation
+import UIKit
+import Vision
+
+struct Detection {
+    let box: CGRect
+    let confidence: Float
+    let label: String?
+    let color: UIColor
+}
+
 
 struct CameraView: View {
     @State private var cameraModel: CameraModel?
@@ -17,7 +28,13 @@ struct CameraView: View {
             cameraModel!.run()
         }
         .task {
-            await cameraModel!.processCameraFrameUpdates(withFrequency: 10)
+            cameraModel!.startserver()
+        }
+        .task {
+            await cameraModel!.processDeviceAnchorUpdates(withFrequency: 30)
+        }
+        .task {
+            await cameraModel!.processCameraFrameUpdates(withFrequency: 30)
         }
         .onDisappear() {
             print("onDisappear")
@@ -27,19 +44,18 @@ struct CameraView: View {
 }
 
 struct CameraCapture: View {
-    @State private var inputImage: UIImage = UIImage(named: "no_frame")!
-    
-    
+    @State private var frameImage: UIImage = UIImage(named: "no_frame")!
+
     var body: some View {
-        VStack {
-            Image(uiImage: inputImage).scaledToFit()
-                
+        HStack {
+            Image(uiImage: frameImage).scaledToFit()
         }
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true, block: {_ in
+            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: {_ in
                 DispatchQueue.global(qos: .background).async {
                     if DataManager.shared.latestFrame.count > 0 {
-                        self.inputImage = DataManager.shared.latestuiImage
+                        let uiImage = DataManager.shared.latestuiImage
+                        self.frameImage = uiImage
                     }
                 }
             })
@@ -47,4 +63,5 @@ struct CameraCapture: View {
         .padding()
         .glassBackgroundEffect()
     }
+    
 }
