@@ -11,6 +11,10 @@ struct VisionTeleApp: App {
             CameraView()
         }
         
+        ImmersiveSpace(id: "robotControl") {
+            RobotControlView()
+        }.defaultSize(width: 2.0, height: 2.0, depth: 2.0)
+        
         WindowGroup(id: "showingCameraFrame") {
             CameraCapture()
         }
