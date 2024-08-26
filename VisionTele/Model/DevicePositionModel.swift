@@ -5,16 +5,24 @@ import SwiftUI
 @Observable class DevicePositionModel {
     private let session = ARKitSession()
     private let worldTracking = WorldTrackingProvider()
+    private let handTracking = HandTrackingProvider()
+    private var handModel = HandTrackingModel()
     
+    var handEntity = Entity()
     var position: SIMD3<Float> = .zero
     var rotation: SIMD3<Float> = .zero
+    var isGrab: Bool = false
+    
+    var indexPosition: SIMD3<Float> = .zero
     
     init() {
+        handModel.setup(entity: self.handEntity)
         Task {
             @MainActor in
-            _ = await session.requestAuthorization(for: [.worldSensing])
+            _ = await session.requestAuthorization(for: [.worldSensing, .handTracking])
             do {
-                try await session.run([worldTracking])
+                try await session.run([worldTracking, handTracking])
+                await self.updateHandTracking()
             } catch {
                 print("ARKit Session error \(error)")
             }
@@ -29,6 +37,35 @@ import SwiftUI
         let dp = deviceAnchor.originFromAnchorTransform
         position = dp.xyz()
         rotation = dp.rot()
+    }
+    
+    private func updateHandTracking() async {
+        for await update in handTracking.anchorUpdates {
+            let handAnchor = update.anchor
+            
+            guard handAnchor.isTracked,
+                    let fingerTips = handAnchor.handSkeleton?.joint(.indexFingerTip),
+                    let thumbTips = handAnchor.handSkeleton?.joint(.thumbTip),
+                  fingerTips.isTracked, thumbTips.isTracked
+            else {
+                continue
+            }
+            
+            let originFromWrist = handAnchor.originFromAnchorTransform
+            let wristFromIndex = fingerTips.anchorFromJointTransform
+            let wristFromThumb = thumbTips.anchorFromJointTransform
+            let originFromIndex = originFromWrist * wristFromIndex
+            let originFromThumb = originFromWrist * wristFromThumb
+            
+            guard handAnchor.chirality == .right else { continue }
+            
+            isGrab = isGrabbing(originFromThumb.xyz(), originFromIndex.xyz())
+            indexPosition = originFromIndex.xyz()
+        }
+    }
+    
+    private func isGrabbing(_ indexAnchor: SIMD3<Float>, _ thumbAnchor: SIMD3<Float>) -> Bool {
+        return distance(indexAnchor, thumbAnchor) < 0.01
     }
 }
 

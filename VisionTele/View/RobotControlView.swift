@@ -6,9 +6,9 @@ import URRobots
 
 struct RobotControlView: View {
     private let devicePosition = DevicePositionModel()
-    private let socketService = WebsocketService(url: URL(string: "ws://loctalhost:8000")!)
+    private let socketService = WebsocketService(url: URL(string: "ws://loctalhost:5001")!)
     
-    @State var ctrIP: String = "ws://localhost:8000"
+    @State var ctrIP: String = "ws://localhost:5001"
     @State var virtualtcpPosition: SIMD3<Float> = [0.0, 0.0, 0.0]
     @State var realtcpPosition: SIMD3<Float> = [0.0, 0.0, 0.0]
     @State var unmatchedPos: SIMD3<Float> = [0.0, 0.0, 0.0]
@@ -18,9 +18,13 @@ struct RobotControlView: View {
     @State var timer = Timer.publish(every: 0.011, on: .main, in: .common).autoconnect()
     @State var robot = Entity()
     @State var virtualTarget = Entity()
+    
     @State private var isDragging = false
     @State private var initialOrientation: simd_quatf?
     @State private var preserveOrientationOnPivotDrag: Bool = true
+    @State private var startPoint: SIMD3<Float> = [-0.6354, 0.149, -0.002]
+    @State private var indexPosition: SIMD3<Float> = [0.0, 0.0, 0.0]
+    
     
     @State var headTrackedEntity: Entity = {
         let headAnchor = AnchorEntity(.head)
@@ -50,9 +54,10 @@ struct RobotControlView: View {
                         SimpleMaterial(color: .red, isMetallic: false)
                     ]
                 )
-                virtualTarget.components.set(InputTargetComponent(allowedInputTypes: .indirect))
+                
+                virtualTarget.components.set(InputTargetComponent(allowedInputTypes: .all))
                 virtualTarget.generateCollisionShapes(recursive: true)
-                virtualTarget.setPosition([-0.6354, 0.149, -0.002], relativeTo: robotEntity)
+                virtualTarget.setPosition(self.startPoint, relativeTo: robotEntity)
                 
                 if let serverAttachment = attachments.entity(for: "serverAddress") {
                     serverAttachment.position = [0.0, -0.05, 0.3]
@@ -65,19 +70,27 @@ struct RobotControlView: View {
                     virtualTarget.addChild(virtualTCPAttachment)
                 }
                 
-                
                 if let hudAttachment = attachments.entity(for: "HUD") {
                     hudAttachment.position = [0.25, 0.0, 0.4]
                     headTrackedEntity.addChild(hudAttachment)
                 }
-
+                
+                content.add(devicePosition.handEntity)
                 content.add(headTrackedEntity)
                 content.add(virtualTarget)
                 content.add(robot)
                 content.add(fixedPoint)
                 
             } update: { content, attachments in
-                
+                Task {
+                    if devicePosition.isGrab {
+                        virtualTarget.setPosition((devicePosition.indexPosition - indexPosition), relativeTo: virtualTarget)
+                        socketService.sendVirtualTCP(position: virtualTarget.position(relativeTo: robot))
+                        indexPosition = devicePosition.indexPosition
+                    } else {
+                        indexPosition = devicePosition.indexPosition
+                    }
+                }
             } attachments: {
                 Attachment(id: "serverAddress") {
                     VStack {
@@ -135,43 +148,6 @@ struct RobotControlView: View {
                 realtcpPosition = socketService.tcpPos
                 virtualtcpPosition = virtualTarget.position
             }
-            .gesture(DragGesture().targetedToEntity(virtualTarget)
-                .onChanged { value in
-                    initialOrientation = value.entity.orientation(relativeTo: nil)
-                    
-                    var targetdPivotTransform = Transform()
-                    if let inputDevicePose = value.inputDevicePose3D {
-                        
-                        targetdPivotTransform.scale = .one
-                        targetdPivotTransform.translation = value.convert(inputDevicePose.position, from: .local, to: robot)
-                        targetdPivotTransform.rotation = value.convert(
-                            AffineTransform3D(rotation: inputDevicePose.rotation),
-                            from: .local, to: robot).rotation
-                    } else {
-                        targetdPivotTransform.translation = value.convert(value.location3D, from: .local, to: robot)
-                    }
-                    
-                    if !isDragging {
-                        let pivotEntity = Entity()
-                        guard let parent = virtualTarget.parent else { fatalError("Non-root entity is missing a parent.")}
-                        parent.addChild(pivotEntity)
-                        pivotEntity.move(to: targetdPivotTransform, relativeTo: robot)
-                        pivotEntity.addChild(virtualTarget, preservingWorldTransform: true)
-                        
-                        isDragging = true
-                    } else {
-                        virtualTarget.move(to: targetdPivotTransform, relativeTo: robot)
-                    }
-                    
-                    if preserveOrientationOnPivotDrag, let initialOrientation = initialOrientation {
-                        virtualTarget.setOrientation(initialOrientation, relativeTo: robot)
-                    }
-                    
-                    socketService.sendVirtualTCP(position: virtualTarget.position(relativeTo: robot))
-                    
-                }
-                .onEnded { _ in isDragging = false }
-            )
             .onDisappear {
                 socketService.disconnect()
             }
